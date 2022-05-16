@@ -1,0 +1,38 @@
+{
+    "name": "libtorchexample",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "install": "cmake-js compile --debug",
+        "webpack:dev": "node node_modules/webpack/bin/webpack.js --watch --config ./config/webpack.dev.js",
+        "webpack:prod": "node node_modules/webpack/bin/webpack.js --config ./config/webpack.prod.js",
+        "clean": "rm -rf build/",
+        "start": "node ./build/bundle.js",
+        "test": "jest --detectOpenHandles --verbose true"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "bindings": "^1.5.0",
+        "cmake-js": "^6.3.0",
+        "cookie-parser": "^1.4.6",
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.1",
+        "express": "^4.18.1",
+        "morgan": "^1.10.0",
+        "multer": "^1.4.4",
+        "nan": "^2.15.0"
+    },
+    "devDependencies": {
+        "@godaddy/terminus": "^4.10.2",
+        "node-addon-api": "^5.0.0",
+        "ts-loader": "^9.3.0",
+        "typescript": "^4.6.4",
+        "webpack": "^5.72.1",
+        "webpack-cli": "^4.9.2",
+        "webpack-dev-server": "^4.9.0",
+        "webpack-merge": "^5.8.0",
+        "webpack-node-externals": "^3.0.0"
+    }
+}
