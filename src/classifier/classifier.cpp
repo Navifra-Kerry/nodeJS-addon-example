@@ -1,7 +1,6 @@
 #include <napi.h>
 #include "classifier.h"
 #include "resnet.h"
-#include "ImageData.h"
 #include <string>
 
 template<typename ... Args>
@@ -22,18 +21,19 @@ Napi::Object classifier::Utils::Init(Napi::Env env, Napi::Object exports) {
 // js-args: classifier.Image instance
 Napi::String classifier::Utils::classify(const Napi::CallbackInfo &info) {
     Napi::Env env = info.Env();
-    //// Unwrap Image and get mat
-    Napi::Object parent = info[0].As<Napi::Object>();
-
-    classifier::Image *image = classifier::Image::Unwrap(parent);
-    cv::Mat mat = image->GetMat().clone();
     try {
+        //// Unwrap Image and get mat
+        Napi::Object parent = info[0].As<Napi::Object>();
+
+        classifier::Image *image = classifier::Image::Unwrap(parent);
+        cv::Mat mat = image->GetMat().clone();
+        cv::cvtColor(mat, mat, cv::COLOR_RGB2BGR);
+        //cv::imwrite("test.jpg", mat);
         ////uint i = 1;
         ////bool asGray = info.Length() > i ? info[i].As<Napi::Boolean>().Value(): false;
         ////if (asGray) {
         ////    cv::cvtColor(mat, mat, cv::COLOR_GRAY2BGR);
-        ////} else {
-        //cv::cvtColor(mat, mat, cv::COLOR_RGB2BGR);
+        ////} else {        
         ////}
 
         torch::DeviceType device_type;
@@ -72,5 +72,4 @@ Napi::String classifier::Utils::classify(const Napi::CallbackInfo &info) {
     } catch( std::exception& ex) {
         return Napi::String::New(env, ex.what());
     }
-    return Napi::String::New(env, ""); 
 }

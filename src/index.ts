@@ -5,12 +5,14 @@ import * as cors from 'cors';
 import * as morgan from 'morgan';
 import { exit } from 'process';
 import { createTerminus } from '@godaddy/terminus';
-import  classify  from './routes/classify';
+import classify from './routes/classify';
+import * as path from 'path';
 
 export const app = express();
-const run = async () => {    
+const run = async () => {
     try {
         const port = process.env.GUI_PORT ? process.env.GUI_PORT : 8000;
+        app.use(express.static('public'));
         app.use(
             cors({
                 origin: true,
@@ -25,7 +27,7 @@ const run = async () => {
         );
         app.use(
             express.urlencoded({
-                extended: false ,
+                extended: false,
                 limit: '50mb',
             }),
         );
@@ -39,9 +41,8 @@ const run = async () => {
             res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
             next();
         });
-
         /**routes */
-        app.use(classify);
+        app.use('/', classify);
 
         const onSignal = async () => {};
 
