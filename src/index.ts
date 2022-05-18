@@ -6,7 +6,7 @@ import * as morgan from 'morgan';
 import { exit } from 'process';
 import { createTerminus } from '@godaddy/terminus';
 import classify from './routes/classify';
-import * as path from 'path';
+import { logger, httpLogStream } from './logger/logger';
 
 export const app = express();
 const run = async () => {
@@ -33,7 +33,11 @@ const run = async () => {
         );
 
         app.use(cookieParser());
-        app.use(morgan(`":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"`, {}));
+        app.use(
+            morgan(`":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"`, {
+                stream: httpLogStream,
+            }),
+        );
 
         app.use((req, res, next) => {
             res.header('Content-Type', 'application/json;charset=UTF-8');
@@ -51,7 +55,7 @@ const run = async () => {
         };
 
         const server = app.listen(+port, () => {
-            console.info(`operation server has started ${port}`);
+            logger.info(`server has started ${port}`);
         });
 
         createTerminus(server, {
@@ -62,7 +66,7 @@ const run = async () => {
             onSignal,
         });
     } catch (ex) {
-        console.error(`run error : ${ex.message}`);
+        logger.error(`run error : ${ex.message}`);
         exit(1);
     }
 };
