@@ -35,6 +35,7 @@ RUN apt update && apt install -y \
         python3-numpy \
         python3-pip \
         cmake \
+        gdb \
         && apt-get clean \
         && rm -rf /var/lib/apt/lists/*
 
@@ -86,4 +87,5 @@ RUN unzip libtorch.zip
 RUN rm -rf opencv_contrib.zip opencv.zip libtorch.zip
 RUN pip3 install torch torchvision
 COPY ./scripts/models/convert.py /home/node/models/convert.py
+WORKDIR /home/node/models
 RUN python3 /home/node/models/convert.py 

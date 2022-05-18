@@ -1,0 +1,16 @@
+version: '3.5'
+services:
+    dev:
+        build:
+            context: .
+        command: tail -f /dev/null
+        volumes:
+            - './:/home/node/classifier'
+        ports:
+            - '8000:8000'
+        restart: always
+        networks:
+            - backend1
+
+networks:
+    backend1:
