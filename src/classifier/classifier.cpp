@@ -60,8 +60,8 @@ Napi::String classifier::Utils::classify(const Napi::CallbackInfo &info) {
         torch::Tensor index = std::get<1>(result);
 
         auto probability = prob.accessor<float,1>();
-        auto idx = index.accessor<long,1>();       
-
+        auto idx = index.accessor<int64_t,1>();       
+        
         return Napi::String::New(env, string_format("{ \"Class\": \"%d\", \"Probability\": \"%.3f\" }",
                 idx[0], probability[0]));
 
