@@ -46,7 +46,7 @@ Napi::String classifier::Utils::classify(const Napi::CallbackInfo &info) {
 
         ResNet18 model;
 #ifdef _WIN32        
-        torch::load(model, "./resnet18_Python.pt");
+        torch::load(model, "C:/workspace/cassifierexample/build/resnet18_Python.pt");
 #else
         torch::load(model, "/home/node/models/resnet18_Python.pt");    
 #endif        
