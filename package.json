@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "install": "cmake-js compile --debug",
+        "postinstall": "cmake-js compile",
+        "rebuild": "cmake-js compile",
         "webpack:dev": "node node_modules/webpack/bin/webpack.js --watch --config ./config/webpack.dev.js",
         "webpack:prod": "node node_modules/webpack/bin/webpack.js --config ./config/webpack.prod.js",
         "clean": "rm -rf build/",

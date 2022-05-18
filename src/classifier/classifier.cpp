@@ -45,7 +45,11 @@ Napi::String classifier::Utils::classify(const Napi::CallbackInfo &info) {
         img_tensor = img_tensor.to(torch::kF32);
 
         ResNet18 model;
-        torch::load(model, "/home/node/models/resnet18_Python.pt");
+#ifdef _WIN32        
+        torch::load(model, "./resnet18_Python.pt");
+#else
+        torch::load(model, "/home/node/models/resnet18_Python.pt");    
+#endif        
         model->to(device_type);
         img_tensor = img_tensor.to(device_type);
 

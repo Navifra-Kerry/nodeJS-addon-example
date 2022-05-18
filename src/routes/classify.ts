@@ -9,12 +9,12 @@ router.post('/classify', upload.single('image'), async (req: Request, res: Respo
     const img: string = req.body.image;
     if (img) {
         const mat = Image.fromBase64(img);
-        
+
         const reslut = classify(mat);
         return res.status(200).send(reslut);
     }
 
-    return res.status(401).send()
+    return res.status(401).send();
 });
 
 export default router;
