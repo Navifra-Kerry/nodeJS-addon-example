@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { Request, Response } from 'express';
 const router = express.Router();
-import { Image, classify } from '../api';
+import { Image, classify } from '../bindings';
 import * as multer from 'multer';
 const upload = multer();
 
