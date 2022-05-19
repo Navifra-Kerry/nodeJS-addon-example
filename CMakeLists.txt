@@ -4,13 +4,13 @@ project(classifier)
 set(CMAKE_CXX_STANDARD 14)
 
 # Sources
-file(GLOB SOURCE_FILES "src/classifier/*.cpp" 
-					   "src/cvtypes/*.cpp"
-					   "src/extras/*.cpp"
-					   "src/io/*.cpp"
-					   "src/jserrors/*.cpp"
-					   "src/utils/*.cpp"
-					   "src/*.cpp"
+file(GLOB SOURCE_FILES "src/modules/classifier/*.cpp" 
+					   "src/modules/cvtypes/*.cpp"
+					   "src/modules/extras/*.cpp"
+					   "src/modules/io/*.cpp"
+					   "src/modules/jserrors/*.cpp"
+					   "src/modules/utils/*.cpp"
+					   "src/modules/*.cpp"
 					   )
 
 				
