@@ -89,3 +89,33 @@ RUN pip3 install torch torchvision
 COPY ./scripts/models/convert.py /home/node/models/convert.py
 WORKDIR /home/node/models
 RUN python3 /home/node/models/convert.py 
+
+ADD ./ /home/node/classifier
+WORKDIR /home/node/classifier
+
+RUN npm install
+RUN npm run webpack:prod
+
+FROM node:16.15.0-buster as production
+ENV DEPLOY="1"
+
+RUN apt update && apt install -y \
+        libgtk-3-0 \  
+        && apt-get clean \
+        && rm -rf /var/lib/apt/lists/*
+
+ENV LD_LIBRARY_PATH=/usr/local/lib:/home/node/libtorch/lib
+WORKDIR /home/node/classifier/
+
+EXPOSE 8000
+
+COPY --from=builder /home/node/classifier/build ./build
+COPY --from=builder /home/node/libtorch/ /home/node/libtorch/
+COPY --from=builder /usr/local/lib /usr/local/lib
+COPY --from=builder /home/node/classifier/package*.json ./
+COPY --from=builder /home/node/classifier/public ./public
+COPY --from=builder /home/node/classifier/scripts ./scripts
+COPY --from=builder /home/node/models/resnet18_Python.pt /home/node/models/resnet18_Python.pt
+
+RUN npm install --only=production
+CMD [ "node", "build/bundle.js" ]
